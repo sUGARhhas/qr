@@ -2,18 +2,23 @@ import subprocess
 import sys
 from multiprocessing import Process
 
-def run_cod_bot():
-    subprocess.run([sys.executable, "cod.py"])
-
-def run_forwarder_bot():
-    subprocess.run([sys.executable, "bot.py"])
+def run_script(script_name):
+    """Запускает Python-скрипт и логирует ошибки"""
+    try:
+        subprocess.run([sys.executable, script_name], check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Ошибка в {script_name}: {e}")
+    except Exception as e:
+        print(f"Неизвестная ошибка в {script_name}: {e}")
 
 if __name__ == "__main__":
-    p1 = Process(target=run_cod_bot)
-    p2 = Process(target=run_forwarder_bot)
+    scripts = ["cod.py", "bot.py", "script3.py", "script4.py"]  # Добавьте свои файлы
     
-    p1.start()
-    p2.start()
+    processes = []
+    for script in scripts:
+        p = Process(target=run_script, args=(script,))
+        p.start()
+        processes.append(p)
     
-    p1.join()
-    p2.join()
+    for p in processes:
+        p.join()
