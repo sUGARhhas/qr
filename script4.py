@@ -6,8 +6,8 @@ api_id = '23743591'
 api_hash = 'aa03afc85a1d893ab2a062837f4e7d37'
 bot_token = '7340013831:AAG7vFpfencCmKNRBxj1QTu_plvm02fqCII'  # Замените на новый токен, который вы предоставите
 
-# Создаем клиента
-client = TelegramClient('bot', api_id, api_hash)
+# Создаем клиента с уникальным именем сессии
+client = TelegramClient('bot4', api_id, api_hash)
 
 @client.on(events.NewMessage())
 async def handler(event):
