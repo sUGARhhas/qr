@@ -12,7 +12,7 @@ def run_script(script_name):
         print(f"Неизвестная ошибка в {script_name}: {e}")
 
 if __name__ == "__main__":
-    scripts = ["cod.py", "bot.py", "script3.py", "script4.py", "script5.py", "script6.py"]  # Добавьте свои файлы
+    scripts = ["cod.py", "bot.py", "script3.py", "script4.py", "script5.py", "script6.py", "script7.py"]  # Добавьте свои файлы
     
     processes = []
     for script in scripts:
