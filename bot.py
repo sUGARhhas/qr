@@ -8,7 +8,7 @@ api_hash = 'aa03afc85a1d893ab2a062837f4e7d37'
 bot_token = '7503623431:AAHDI_4vFTnEFlL_BKjWZUTGjTO_qf6BQTs'
 
 # Создаем клиента
-client = TelegramClient('bot', api_id, api_hash)
+client = TelegramClient('forwarder_bot', api_id, api_hash)
 
 # Список каналов-источников
 SOURCE_CHANNELS = [-1002260116950, -1002590539144]
