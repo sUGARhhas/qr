@@ -1,8 +1,9 @@
 import os
 import logging
+import pytz
 from collections import defaultdict
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, Defaults
 import sqlite3
 
 # Настройка логирования
@@ -312,10 +313,14 @@ async def unban(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def main():
     # Вставьте сюда токен вашего бота
     TOKEN = "7952695336:AAGbFGBsugbn7tmjIpzxUk_9NmOyeZvTlcw"
+    
+    # Установка часового пояса по умолчанию
+    defaults = Defaults(tzinfo=pytz.utc)
 
-    application = ApplicationBuilder().token(TOKEN).build()
+    # Создаем приложение
+    application = ApplicationBuilder().token(TOKEN).defaults(defaults).build()
 
-    # Регистрация обработчиков
+    # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("ban", ban))
     application.add_handler(CommandHandler("unban", unban))

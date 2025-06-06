@@ -1,9 +1,10 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler, CallbackQueryHandler
+from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes, CommandHandler, CallbackQueryHandler, Defaults
 import requests
 from bs4 import BeautifulSoup
 import re
 import time
+import pytz
 
 TOKEN = "8046831301:AAFZTumxzU3mmJ-AMr_hciH7p7rWzE671QQ"
 API_TIMEOUT = 15  # Увеличено до 15 секунд
@@ -183,9 +184,17 @@ async def handle_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = create_keyboard(current_index, len(results))
     await query.message.edit_text(message, parse_mode="HTML", reply_markup=keyboard)
 
-app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(CommandHandler("start", start))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-app.add_handler(CallbackQueryHandler(handle_callback))
+def main():
+    # Установка часового пояса по умолчанию
+    defaults = Defaults(tzinfo=pytz.utc)
 
-app.run_polling()
+    app = ApplicationBuilder().token(TOKEN).defaults(defaults).build()
+
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+    app.add_handler(CallbackQueryHandler(handle_callback))
+
+    app.run_polling()
+
+if __name__ == "__main__":
+    main()

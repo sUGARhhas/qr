@@ -1,5 +1,6 @@
+import pytz
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, Defaults
 
 # Функция для обработки команды /start или /id
 async def start_or_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -37,8 +38,11 @@ def main():
     # Вставьте сюда токен вашего бота
     TOKEN = "7698109317:AAG078X5h3r1VldVFLa1-DMeS6JMGRR8q0U"
 
+    # Установка часового пояса по умолчанию
+    defaults = Defaults(tzinfo=pytz.utc)
+
     # Создаем приложение
-    application = ApplicationBuilder().token(TOKEN).build()
+    application = ApplicationBuilder().token(TOKEN).defaults(defaults).build()
 
     # Добавляем обработчики команд
     application.add_handler(CommandHandler("start", start_or_id))
